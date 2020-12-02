@@ -1,4 +1,4 @@
-class Solution {
+class Solution {//常规遍历
 public:
     bool Find(int target, vector<vector<int> > array) {
         // 判断数组是否为空
@@ -8,6 +8,74 @@ public:
                 if (val == target)
                     return true;
             }
+        }
+        return false;
+    }
+};
+//二分查找
+class Solution {
+public:
+    bool Find(int target, vector<vector<int> > array) {
+        if (array.size() == 0 || array[0].size() == 0)
+        {
+            return false;
+        }
+        else {
+            int size = array[0].size();
+            for (const auto& arr : array)
+            {
+                int low = 0;
+                int heigh = size-1;
+                
+                while (low <= heigh) {
+                    int mid = (low+heigh )/ 2;
+                    if (arr[mid] == target)
+                    {
+                        return true;
+                    }
+                    else if (arr[mid] < target)
+                    {
+                        low = mid + 1;
+                    }
+                    else {
+                        heigh = mid - 1;
+                    }
+                }
+
+            }
+        }
+        return false;
+    }
+};
+//m+n复杂度的方法，从右上角开始查找
+class Solution {
+public:
+    bool Find(int target, vector<vector<int> > array) {
+        if (array.size() == 0 || array[0].size() == 0)
+        {
+            return false;
+        }
+        else {
+            int m = array.size();
+            int n = array[0].size();
+            int val = 0;
+            int i = 0, j = n - 1;
+            while (i < m && j >= 0)
+            {
+                val = array[i][j];
+                if (val ==target)
+                {
+                    return true;
+                }
+                if (target < val)
+                {
+                    j--;
+                }
+                else {
+                    i++;
+                }
+            }
+
         }
         return false;
     }
