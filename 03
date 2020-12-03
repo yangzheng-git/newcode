@@ -1,0 +1,67 @@
+//遍历一遍，放入vector 用全局的反转
+class Solution {
+public:
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> ret;
+        while(head)
+        {
+            ret.push_back(head->val);
+            head=head->next;
+        }
+        reverse(ret.begin(),ret.end());
+        return ret;
+        
+    }
+};
+//递归法
+class Solution {
+public:
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> ret;
+       if(!head)
+       {
+           return ret;
+       }
+        ret=printListFromTailToHead(head->next);
+        ret.push_back(head->val);
+        return ret;
+        
+    }
+    
+    
+    
+    /**
+*  struct ListNode {
+*        int val;
+*        struct ListNode *next;
+*        ListNode(int x) :
+*              val(x), next(NULL) {
+*        }
+*  };
+*/
+class Solution {
+public:
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> ret;//记住只有中间的是head
+       ListNode *p1=NULL;
+       ListNode *p2=head;
+       ListNode *p3=NULL;
+        while(p2)
+        {
+            p3=p2->next;
+            p2->next=p1;
+            p1=p2;
+            p2=p3;
+        }
+        //head->next=nullptr;
+//         p2=p2->next;注意这里已经是null了，不能用了
+        while(p1)
+        {
+            ret.push_back(p1->val);
+            p1=p1->next;
+            
+        }
+        return ret;
+        
+    }
+};
