@@ -17,3 +17,23 @@ public:
         }
     }
 };
+//动态规划
+class Solution {
+public:
+    int jumpFloor(int number) {
+       int step1=1;
+        int step2=1;
+        int step3;
+        if(number<=1) return 1;
+        for(int i=2;i<=number;i++)
+        {
+            step3=step2+step1;
+            step1=step2;
+            step2=step3;
+            
+        }
+        return step3;
+        
+    }
+    
+};
