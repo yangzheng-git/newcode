@@ -1,0 +1,40 @@
+//滑动窗口
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        vector<int> chars(128, 0);//纪录字符串中字符的数量；
+        vector<bool> flag(128, false);//记录T中存在的字符
+        //首先对T中的情况进行统计
+        for (int i = 0; i < t.size(); i++)
+        {
+            chars[t[i]]++;
+            flag[t[i]] = true;
+        }
+        int cnt = 0, l = 0, min_size = s.size() + 1, min_l = 0;
+        for (int r = 0; r < s.size(); r++)
+        {
+            if (flag[s[r]])
+            {
+                if (--chars[s[r]] >= 0) cnt++;
+            }
+            while (cnt == t.size())
+            {
+                if (min_size > r - l + 1)
+                {
+                    min_size = r - l + 1;
+                    min_l = l;
+                }
+                if (flag[s[l]] && ++chars[s[l]] > 0)
+                {
+                    cnt--;
+                }
+               
+              
+                
+                l++;
+                //cout << s.substr(min_l, min_size) << endl;
+            }
+
+        } return min_size >=s.size() + 1 ? "" : s.substr(min_l, min_size);
+    }
+};
