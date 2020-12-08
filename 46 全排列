@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> answer;
+        
+        backtrack(nums,0,answer);
+        return answer;
+
+    }
+    void backtrack(vector<int> &nums,int start,vector<vector<int>> &answer)
+    {
+        if(start==nums.size()-1)
+        {
+            answer.push_back(nums);
+            return;
+        }
+        else
+        {
+            for(int i=start;i<nums.size();i++){
+                 swap(nums[start],nums[i]);
+                 backtrack(nums,start+1,answer);
+                 swap(nums[start],nums[i]);
+            }
+           
+        }
+        return;
+    }
+};
