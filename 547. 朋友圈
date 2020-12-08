@@ -1,0 +1,47 @@
+//深度优先搜索的方式
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int ans=0;
+        for(int i=0;i<M.size();i++)\
+        {
+            for(int j=0;j<M[0].size();j++)
+            {
+                if(M[i][j]==1)
+                {
+                    ans++;
+                    dfs(M,i,j);
+                }
+            }
+        }
+        return ans;
+
+    }
+    void dfs(vector<vector <int>>& M,int cur_i,int cur_j)
+    {
+        if(cur_i<0||cur_j<0||cur_i==M.size()||cur_j==M[0].size()||M[cur_i][cur_j]==0)
+        {
+            return;
+        }
+        else
+        {
+            M[cur_i][cur_j]=0;
+            M[cur_j][cur_i]=0;
+            // int di[4]={-1,1,0,0};
+            // int dj[4]={0,0,-1,1};
+            int next_i,next_j;
+            for(int j=0;j<M[0].size();j++)
+            {
+                // next_i=cur_i+di[i];
+                // next_j=cur_j+dj[i];
+                if(M[cur_i][j]==1)
+                {
+                    dfs(M,j,cur_i);
+                }
+                
+            }
+
+        }
+        return;
+    }
+};
