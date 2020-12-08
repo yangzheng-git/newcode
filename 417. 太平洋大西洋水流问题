@@ -1,0 +1,60 @@
+//从边缘向内部深度搜素
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix) {
+        if(matrix.size()==0) return {};
+        vector<vector<int>> can_reach_1(matrix.size(), vector<int>(matrix[0].size(), 0));
+        vector<vector<int>> can_reach_2(matrix.size(), vector<int>(matrix[0].size(), 0));
+        vector<vector<int>> ans;
+        int m = matrix.size(), n = matrix[0].size();
+         for (int i = 0; i < m; i++)
+        {
+            dfs_1(matrix, can_reach_1, i, 0);
+            dfs_1(matrix, can_reach_2, i, n - 1);
+        }
+        for (int i = 0; i < n; i++)
+        {
+            dfs_1(matrix, can_reach_1, 0, i);
+            dfs_1(matrix, can_reach_2, m - 1, i);
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (can_reach_1[i][j] == 1 && can_reach_2[i][j] == 1)
+                {
+                    vector<int>pos;
+                    pos.push_back(i);
+                    pos.push_back(j);
+                    ans.push_back(pos);
+                }
+            }
+        }
+        return ans;
+
+
+    }
+    void dfs_1(vector<vector<int>>& matrix, vector<vector<int>>& can_reach_1, int cur_i, int cur_j)
+    {
+        if (can_reach_1[cur_i][cur_j] == 1) return;
+        else
+        {
+            int next_i, next_j;
+            int di[4] = { -1,1,0,0 };
+            int dj[4] = { 0,0,-1,1 };
+            can_reach_1[cur_i][cur_j] = 1;
+            for (int i = 0; i < 4; i++)
+            {
+                next_i = cur_i + di[i];
+                next_j = cur_j + dj[i];
+                if (next_i < 0 || next_j < 0 || next_i == matrix.size() || next_j == matrix[0].size() || matrix[next_i][next_j] < matrix[cur_i][cur_j])
+                {
+                    continue;
+                }
+                else {
+                    dfs_1(matrix, can_reach_1, next_i, next_j);
+                }
+            }
+        }
+        return;
+    }
+    
+};
