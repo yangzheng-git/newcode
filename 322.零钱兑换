@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int len = coins.size();
+
+        vector<vector<int>> dp(len+1, vector<int>(amount + 1, amount + 1));
+        for (int i = 0; i < dp.size(); i++) {
+            dp[i][0] = 0;
+
+        }
+        if (coins[0] < dp[0].size()) {
+            dp[1][coins[0]] = 1;
+        }
+
+        for (int i = 1; i < dp.size(); i++) {
+            for (int j = 1; j < dp[0].size(); j++) {
+                if (j >=coins[i-1]&& dp[i][j - coins[i - 1]] != amount + 1) {
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - coins[i-1]] + 1);//住这里不是i-1；可以重复选
+                }
+                else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        if (dp[len][dp[0].size() - 1] != amount + 1) {
+            return dp[len][dp[0].size() - 1];
+        }
+        return -1;
+        
+
+
+    }
+};
