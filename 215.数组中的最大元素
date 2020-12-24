@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int l=0,r=nums.size()-1,target=nums.size()-k;
+        int mid=l+(r-l)/2;
+        while(l<r){
+            mid=quik_chose(nums,l,r);
+            if(mid==target){
+                return nums[mid];
+            }
+            if(mid<target){
+                l=mid+1;
+            }
+            else {
+                r=mid-1;
+            }
+
+        }
+        return nums[l];
+    }
+    int quik_chose(vector<int> &nums,int l,int r){
+        int i=l+1,j=r;
+        while(i<j){
+            while(i<j&&nums[j]>nums[l]){
+                j--;
+            }
+            while(i<j&&nums[i]<nums[l]){
+                i++;
+            }
+            swap(nums[i],nums[j]);
+
+            
+        }
+        swap(nums[l],nums[i]);
+        return i;
+    }
+    void swap(int &a,int &b){
+        int temp;
+        temp=a;
+        a=b;
+        b=temp;
+    }
+};
