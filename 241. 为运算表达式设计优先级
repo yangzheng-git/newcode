@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> diffWaysToCompute(string input) {
+        int len=input.size();
+        vector<int> ways;
+        for(int i=0;i<len;i++){
+            char c=input[i];
+            if(input[i]=='+'||input[i]=='-'||input[i]=='*'){
+                vector<int> left=diffWaysToCompute(input.substr(0,i));
+                vector<int> right=diffWaysToCompute(input.substr(i+1));
+                for(int l:left){
+                    for(int r:right){
+                        if(c=='+') ways.push_back(r+l);
+                        if(c=='-') ways.push_back(l-r);
+                        if(c=='*') ways.push_back(l*r);
+                    }
+                }
+            }
+        }
+        if(ways.empty()) (ways.push_back(stoi(input)));
+        return ways;
+    }
+};
