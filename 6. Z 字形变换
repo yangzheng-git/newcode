@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if(numRows==1){
+            return s;
+        }
+        vector<string> rows(min(numRows, int(s.size())));
+        //vector<string> rows(min(numRows,len(s.size())));
+        int num=0;
+        bool godown=false;
+        for(char c:s){
+            rows[num]+=c;
+            if(num==0||num==numRows-1){
+                godown=!godown;
+            }
+            num+=godown? 1:-1;
+        }
+        string ans;
+        for(string s1:rows){
+            ans+=s1;
+        }
+        return ans;
+
+    }
+};
